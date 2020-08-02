@@ -7,6 +7,10 @@ pipelineJob('example-pipeline') {
         pipeline {
           agent any
             stages {
+              stage("Checkout") {
+		            steps {
+		                	git url: 'https://github.com/Kostua/us2ua-shipping-cost-calculator'
+		            }
               stage ('Build') {
                 steps {
                   echo 'Build phase'
@@ -26,6 +30,7 @@ pipelineJob('example-pipeline') {
         }
       '''.stripIndent())
       sandbox()
+
     }
   }
 }
