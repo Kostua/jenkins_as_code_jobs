@@ -1,7 +1,7 @@
 #!/usr/bin/env groovy
  pipelineJob('JobsGenerator') {
 
-        def repo = 'https://github.com/Kostua/us2ua-shipping-cost-calculator.git'
+        def repo = 'https://github.com/Kostua/us2ua-shipping-cost-calculator'
 
         description("Pipeline for $repo")
 
