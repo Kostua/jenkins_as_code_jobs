@@ -8,6 +8,7 @@ pipeline {
     tools {
         // Install the Maven version configured as "M3" and add it to the path.
         maven "M3"
+        nodejs
     }
 
     stages {
@@ -17,7 +18,7 @@ pipeline {
                 git 'https://github.com/Kostua/us2ua-shipping-cost-calculator'
 
                 // Run Maven on a Unix agent.
-                sh "mvn -Dmaven.test.failure.ignore=true clean test"
+                sh "mvn -Dmaven.test.failure.ignore=true test"
 
                 // To run Maven on a Windows agent, use
                 // bat "mvn -Dmaven.test.failure.ignore=true clean package"
