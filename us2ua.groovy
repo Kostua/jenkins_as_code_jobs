@@ -1,3 +1,7 @@
+pipelineJob('example-pipeline') {
+  definition {
+    cps {
+      script('''
 pipeline {
     agent any
 
@@ -29,4 +33,9 @@ pipeline {
             }
         }
     }
+}
+'''.stripIndent())
+      sandbox()
+    }
+  }
 }
