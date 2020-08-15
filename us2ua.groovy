@@ -9,6 +9,10 @@ pipelineJob('us2ua-pipeline') {
     environment {
         HOME = '.'
     }
+
+    triggers {
+      pollSCM('H */4 * * *') 
+    }
     stages {
         stage('Build') {
             steps {
