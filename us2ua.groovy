@@ -11,7 +11,7 @@ pipelineJob('us2ua-pipeline') {
     }
 
     triggers {
-      pollSCM('*/5 * * * *') 
+      pollSCM('H/5 * * * *') 
     }
     stages {
         stage('Build') {
@@ -35,3 +35,4 @@ pipelineJob('us2ua-pipeline') {
     }
   }
 }
+queue('us2ua-pipeline')
