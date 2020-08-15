@@ -11,7 +11,7 @@ pipelineJob('us2ua-pipeline') {
     }
 
     triggers {
-      pollSCM('H */4 * * *') 
+      pollSCM('*/5 * * * *') 
     }
     stages {
         stage('Build') {
