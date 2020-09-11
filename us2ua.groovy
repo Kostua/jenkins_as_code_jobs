@@ -2,7 +2,7 @@ pipelineJob('us2ua-pipeline') {
   definition {
     cps {
       script('''
-      def secrets = [
+def secrets = [
   [path: 'secret/jenkins/dockerhub', engineVersion: 2, secretValues: [
     [envVar: 'USERNAME', vaultKey: 'username'],
     [envVar: 'PASSWORD', vaultKey: 'password']]],
@@ -46,6 +46,7 @@ pipeline {
                 stash includes: '**/target/*.jar', name: 'app'
 
             }
+        }
         stage('Docker build') {
             agent any
             steps {
@@ -56,15 +57,8 @@ pipeline {
 
         }
 
-
-        stage('CleanWorkspace') {
-          step([$class: 'WsCleanup']) 
-        }
-      
-      }
+    }
 }
-
-
 
 '''.stripIndent())
       sandbox()
