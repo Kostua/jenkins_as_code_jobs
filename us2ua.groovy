@@ -2,7 +2,7 @@ pipelineJob('us2ua-pipeline') {
   definition {
     cps {
       script('''
-def secrets = [
+      def secrets = [
   [path: 'secret/jenkins/dockerhub', engineVersion: 2, secretValues: [
     [envVar: 'USERNAME', vaultKey: 'username'],
     [envVar: 'PASSWORD', vaultKey: 'password']]],
@@ -10,6 +10,11 @@ def secrets = [
 def configuration = [vaultUrl: 'http://vault:8200',  vaultCredentialId: 'vault', engineVersion: 2]
 pipeline {
     agent any
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '20'))
+        disableConcurrentBuilds()
+    }
+  
     triggers {
       pollSCM('H/5 * * * *') 
     }
@@ -20,36 +25,45 @@ pipeline {
             sh "echo ${env.USERNAME}"
             sh "echo ${env.PASSWORD}"
           }
-        }
-    }
-      
+        }  
+      }
         stage('Package') {
             agent {
              docker { image 'maven:3.6-openjdk-15'}
             }
-            
-            environment {
-             // Override HOME to WORKSPACE
-             HOME = "${WORKSPACE}"
-             // or override default cache directory (~/.npm)
-              NPM_CONFIG_CACHE = "${WORKSPACE}/.npm"
-            }
-      
+          environment {
+          // Override HOME to WORKSPACE
+          HOME = "${WORKSPACE}"
+          // or override default cache directory (~/.npm)
+          NPM_CONFIG_CACHE = "${WORKSPACE}/.npm"
+          }
             steps {
                 // Get some code from a GitHub repository
                 git 'https://github.com/Kostua/us2ua-shipping-cost-calculator'
 
                 // Run Maven on a Unix agent.
                 sh "mvn -Dmaven.test.failure.ignore=true clean package"
-                  sh "docker build -t kostua/calculator ."
+                stash includes: '**/target/*.jar', name: 'app'
+
+            }
+        stage('Docker build') {
+            agent any
+            steps {
+                unstash 'app'
+                sh "docker build -t kostua/calculator ."
 
             }
 
         }
-        
-    }
+
+
+        stage('CleanWorkspace') {
+          step([$class: 'WsCleanup']) 
+        }
+      
+      }
 }
- 
+
 
 
 '''.stripIndent())
