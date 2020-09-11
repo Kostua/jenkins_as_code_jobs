@@ -16,11 +16,7 @@ pipeline {
         buildDiscarder(logRotator(numToKeepStr: '20'))
         disableConcurrentBuilds()
     }
-    
-    environment {
-        HOME = '.'
-    }
-
+  
     triggers {
       pollSCM('H/5 * * * *') 
     }
@@ -55,9 +51,7 @@ pipeline {
         }
 
         stage('CleanWorkspace') {
-            steps {
-                cleanWs()
-            }
+          step([$class: 'WsCleanup']) 
         }
     
         
