@@ -9,6 +9,7 @@ pipelineJob('us2ua-pipeline') {
 ]
 def configuration = [vaultUrl: 'http://vault:8200',  vaultCredentialId: 'vault', engineVersion: 2]
 pipeline {
+    agent any
     options {
         buildDiscarder(logRotator(numToKeepStr: '20'))
         disableConcurrentBuilds()
