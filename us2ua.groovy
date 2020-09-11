@@ -46,7 +46,7 @@ pipeline {
 
             }
 
-        }
+        
         
         stage('Docker build') {
             steps {
@@ -60,7 +60,7 @@ pipeline {
         stage('CleanWorkspace') {
           step([$class: 'WsCleanup']) 
         }
-      }
+      
     
         
     }
