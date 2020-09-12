@@ -51,11 +51,31 @@ pipeline {
             agent any
             steps {
                 unstash 'app'
-                sh "docker build -t kostua/calculator ."
+                sh "docker build -t kostua/calculator:latest ."
 
             }
 
         }
+
+        stage('Docker login') {
+          agent any
+           steps {
+        
+                withVault([configuration: configuration, vaultSecrets: secrets]) {
+                git 'https://github.com/Kostua/us2ua-shipping-cost-calculator'
+                sh "docker login -u ${env.USERNAME} -p ${env.PASSWORD}"
+                
+                }
+            }
+
+        }
+        
+        stage('Docker push') {
+            steps {
+                sh "docker push kostua/calculator:latest"
+            }
+        }
+
 
     }
 }
