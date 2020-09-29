@@ -1,4 +1,4 @@
-pipelineJob('us2ua-pipeline') {
+pipelineJob('petclinic-pipeline') {
   definition {
     cps {
       script('''
