@@ -3,14 +3,9 @@ pipelineJob('petclinic-pipeline') {
     cps {
       script('''
 pipeline {
-    agent {
-      docker {
-            image 'maven:3-alpine'
-            args '-v $HOME/.m2:/root/.m2'
-        }
-    }
+    agent none
     options {
-        buildDiscarder(logRotator(numToKeepStr: '20'))
+        buildDiscarder(logRotator(numToKeepStr: '10'))
         disableConcurrentBuilds()
     }
   
@@ -20,7 +15,9 @@ pipeline {
     stages {
         stage('Test') {
              agent {
-             docker { image 'maven:3.6-openjdk-15'}
+             docker { image 'maven:3.6-openjdk-15'
+                      args '-v $HOME/.m2:/root/.m2'
+                      }
             }
             steps {
                 // Get some code from a GitHub repository
