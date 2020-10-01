@@ -3,7 +3,12 @@ pipelineJob('petclinic-pipeline') {
     cps {
       script('''
 pipeline {
-    agent any
+    agent {
+      docker {
+            image 'maven:3-alpine'
+            args '-v $HOME/.m2:/root/.m2'
+        }
+    }
     options {
         buildDiscarder(logRotator(numToKeepStr: '20'))
         disableConcurrentBuilds()
