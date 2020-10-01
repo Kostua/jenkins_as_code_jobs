@@ -14,10 +14,12 @@ pipeline {
     }
     stages {
         stage('Test') {
-            agent any
+             agent {
+             docker { image 'maven:3.6-openjdk-15'}
+            }
             steps {
                 // Get some code from a GitHub repository
-                git 'https://github.com/spring-projects/spring-petclinic.git'
+                git branch: "main", url: 'https://github.com/spring-projects/spring-petclinic'
 
                 // Run Maven on a Unix agent.
                 sh "mvn -Dmaven.test.failure.ignore=true test"
