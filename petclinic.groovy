@@ -3,7 +3,7 @@ pipelineJob('petclinic-pipeline') {
     cps {
       script('''
 pipeline {
-    agent none
+    agent any
     options {
         buildDiscarder(logRotator(numToKeepStr: '10'))
         disableConcurrentBuilds()
