@@ -21,7 +21,7 @@ pipeline {
             }
             steps {
                 // Get some code from a GitHub repository
-                git branch: "main", url: 'https://github.com/spring-projects/spring-petclinic'
+                git branch: "main", url: 'https://github.com/Kostua/spring-petclinic'
 
                 // Run Maven on a Unix agent.
                 sh "mvn -Dmaven.test.failure.ignore=true test"
