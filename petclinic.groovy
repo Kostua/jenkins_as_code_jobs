@@ -15,7 +15,7 @@ pipeline {
     stages {
         stage('Test') {
              agent {
-             docker { image 'maven:3.6-openjdk-15'
+             docker { image 'maven:3.6-openjdk-16'
                       args '-v $HOME/.m2:/root/.m2'
                       }
             }
@@ -28,6 +28,13 @@ pipeline {
                 stash includes: '**/target/*.jar', name: 'app'
 
             }
+        }
+        stage('Build image'){
+          steps {
+                unstash 'app'
+                sh "docker build -t kostua/petclinic:latest ."
+          }
+
         }
 
   }  
