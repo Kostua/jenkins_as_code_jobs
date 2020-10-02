@@ -30,6 +30,7 @@ pipeline {
             }
         }
         stage('Build image'){
+          agent any
           steps {
                 unstash 'app'
                 sh "docker build -t kostua/petclinic:latest ."
