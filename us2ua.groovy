@@ -1,20 +1,16 @@
-freeStyleJob(('us2ua') {
+pipelineJob('us2ua-pipeline') {
   definition {
-    cps {
-      script('''
-         freeStyleJob('JobsGenerator') {
-        scm {
-            github('https://github.com/Kostua/us2ua-shipping-cost-calculator', 'master')
-        }
-        steps {
-            dsl {
-              external('Jenkinsfile')
-            }
+    cpsScm {
+      scm {
+        git {
+          remote {
+            url('https://github.com/Kostua/us2ua-shipping-cost-calculator')
+          }
+          branch('*/master')
         }
       }
-'''.stripIndent())
-      sandbox()
+      lightweight()
     }
   }
 }
-queue('us2ua')
+queue('us2ua-pipeline')

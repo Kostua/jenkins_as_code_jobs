@@ -1,4 +1,4 @@
-pipelineJob('job-dsl-plugin') {
+pipelineJob('petclinic-pipeline') {
   definition {
     cpsScm {
       scm {
@@ -13,3 +13,4 @@ pipelineJob('job-dsl-plugin') {
     }
   }
 }
+queue('petclinic-pipeline')
