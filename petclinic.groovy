@@ -2,51 +2,16 @@ pipelineJob('petclinic-pipeline') {
   definition {
     cps {
       script('''
-pipeline {
-    agent any
-    options {
-        buildDiscarder(logRotator(numToKeepStr: '10'))
-        disableConcurrentBuilds()
-    }
-  
-    triggers {
-      pollSCM('H/5 * * * *') 
-    }
-    stages {
-        stage('Test') {
-             agent {
-             docker { image 'maven:3.6-openjdk-16'
-                      args '-v $HOME/.m2:/root/.m2'
-                      }
-            }
-            steps {
-                // Get some code from a GitHub repository
-                git branch: "main", url: 'https://github.com/Kostua/spring-petclinic'
-
-                // Run Maven on a Unix agent.
-                sh "mvn -Dmaven.test.failure.ignore=true -Dcheckstyle.skip package"
-                stash includes: '**/target/*.jar', name: 'app'
-
+           freeStyleJob('JobsGenerator') {
+        scm {
+            github('https://github.com/Kostua/spring-petclinic', 'main')
+        }
+        steps {
+            dsl {
+              external('Jenkinsfile')
             }
         }
-        stage('Build image'){
-          agent any
-          steps {
-                unstash 'app'
-                sh "docker build -t kostua/petclinic:latest ."
-          }
-
-        }
-
-  }  
-    post {
-        always {
-            echo 'One way or another, I have finished'
-            deleteDir() /* clean up our workspace */
       }
-    }
-}
-
 '''.stripIndent())
       sandbox()
     }
