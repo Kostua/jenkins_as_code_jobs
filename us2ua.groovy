@@ -1,4 +1,4 @@
-pipelineJob('us2ua-pipeline') {
+freeStyleJob(('us2ua') {
   definition {
     cps {
       script('''
@@ -17,4 +17,4 @@ pipelineJob('us2ua-pipeline') {
     }
   }
 }
-queue('us2ua-pipeline')
+queue('us2ua')

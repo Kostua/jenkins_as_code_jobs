@@ -1,4 +1,4 @@
-pipelineJob('petclinic-pipeline') {
+freeStyleJob('petclinic') {
   definition {
     cps {
       script('''
@@ -17,4 +17,4 @@ pipelineJob('petclinic-pipeline') {
     }
   }
 }
-queue('petclinic-pipeline')
+queue('petclinic')
