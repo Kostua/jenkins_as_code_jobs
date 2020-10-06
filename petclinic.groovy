@@ -1,20 +1,15 @@
-freeStyleJob('petclinic') {
+pipelineJob('job-dsl-plugin') {
   definition {
-    cps {
-      script('''
-           freeStyleJob('JobsGenerator') {
-        scm {
-            github('https://github.com/Kostua/spring-petclinic', 'main')
-        }
-        steps {
-            dsl {
-              external('Jenkinsfile')
-            }
+    cpsScm {
+      scm {
+        git {
+          remote {
+            url('https://github.com/Kostua/spring-petclinic')
+          }
+          branch('*/main')
         }
       }
-'''.stripIndent())
-      sandbox()
+      lightweight()
     }
   }
 }
-queue('petclinic')
