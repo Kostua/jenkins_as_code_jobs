@@ -1,4 +1,5 @@
 pipelineJob('us2ua-pipeline') {
+  disabled()
   definition {
     cpsScm {
       scm {
