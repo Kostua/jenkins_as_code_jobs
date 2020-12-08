@@ -1,13 +1,14 @@
 multibranchPipelineJob('peteclinic') {
     branchSources {
         git{
-            id('123456789') // IMPORTANT: use a constant and unique identifier
+            id('petclinicID') // IMPORTANT: use a constant and unique identifier
             remote('https://github.com/Kostua/spring-petclinic.git')
         }
     }
+    lightweight()
     orphanedItemStrategy {
         discardOldItems {
-            numToKeep(20)
+            numToKeep(2)
         }
     }
 }
