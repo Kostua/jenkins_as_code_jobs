@@ -1,16 +1,14 @@
-multibranchPipelineJob('petclinic-pipeline') {
-  definition {
-    cpsScm {
-      scm {
-        git {
-          remote {
-            url('https://github.com/Kostua/spring-petclinic')
-          }
-          branch('**')
+multibranchPipelineJob('peteclinic') {
+    branchSources {
+        github {
+            id('123456789') // IMPORTANT: use a constant and unique identifier
+            repository('https://github.com/Kostua/spring-petclinic.git')
         }
-      }
-      lightweight()
     }
-  }
+    orphanedItemStrategy {
+        discardOldItems {
+            numToKeep(20)
+        }
+    }
 }
 queue('petclinic-pipeline')
