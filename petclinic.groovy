@@ -6,7 +6,7 @@ multibranchPipelineJob('petclinic-pipeline') {
           remote {
             url('https://github.com/Kostua/spring-petclinic')
           }
-//          branch('*/main')
+          branch('**')
         }
       }
       lightweight()
