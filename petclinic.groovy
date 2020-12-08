@@ -1,4 +1,4 @@
-pipelineJob('petclinic-pipeline') {
+multibranchPipelineJob('petclinic-pipeline') {
   definition {
     cpsScm {
       scm {
@@ -6,7 +6,7 @@ pipelineJob('petclinic-pipeline') {
           remote {
             url('https://github.com/Kostua/spring-petclinic')
           }
-          branch('*/main')
+//          branch('*/main')
         }
       }
       lightweight()
